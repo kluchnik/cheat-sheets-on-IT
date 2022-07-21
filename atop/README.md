@@ -274,3 +274,17 @@ time disk rMbit/s wMbit/s avserv
 08:14:00 sda 0 0.112 0.00 ms
 ```
 
+#### Example
+```
+atop 1 600 -w /tmp/atop.log
+
+atopsar -r /tmp/atop.log -c > /tmp/atopsar-cpu.log
+atopsar -r /tmp/atop.log -m > /tmp/atopsar-mem.log
+atopsar -r /tmp/atop.log -i > /tmp/atopsar-net.log
+atopsar -r /tmp/atop.log -d > /tmp/atopsar-dsk.log
+
+cat atopsar-cpu.log | grep all | awk '{ print $1 ";" $3 ";" $5 ";" $3+$5}' > cpu.log
+cat atopsar-mem.log | grep -E '^[0-9:]{3}' | grep -E 'M' | awk '{print $1 ";" $2 ";" $3 ";" $2-$3"M" }' > mem.log
+cat atopsar-dsk.log | grep sda | awk '{ print $1 ";" $2 ";" $5/125 ";" $7/125 ";" $9 ";" $10}' > dsk.log
+cat atopsar-net.log | grep eth0 | awk '{ print $1 ";" $2 ";" $3 ";" $4 ";" $5/125 ";" $6/125}' > net-eth0.log
+```

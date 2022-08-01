@@ -79,7 +79,7 @@ $ (
   printf 'net.ipv4.ping_group_range = %u %u\n' ${GROUP_ID} ${GROUP_ID} \
     >> /etc/sysctl.conf
 )
-$ sysctl -p
+$ sudo sysctl -p
 ```
 #### Сценарий запуска ВМ (файл /home/arm/run-qemu-arm64.sh)
 ```

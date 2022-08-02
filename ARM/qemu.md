@@ -197,6 +197,34 @@ $ sudo systemctl stop qemu-arm64.service
 #### Доступ к ВМ
 ```
 ssh -P 2222 <username>@<IP-адрес>
-# socat - UNIX-CONNECT:/tmp/console.sock
-# socat - UNIX-CONNECT:/tmp/monitor.sock
+$ socat - UNIX-CONNECT:/tmp/console.sock
+$ socat - UNIX-CONNECT:/tmp/monitor.sock
+```
+## Альтернативный способ запуска ВМ
+#### Монтирования виртуального диска qcow2
+```
+$ DISK_FILE=/home/arm/disk.qcow2
+
+$ modprobe nbd max_part=8
+$ qemu-nbd --connect=/dev/nbd0 ${DISK_FILE}
+$ fdisk /dev/nbd0 -l
+$ partx -a /dev/nbd0
+$ mount /dev/nbd0p1 /mnt/
+```
+#### Запуск ВМ с указанием ядра и initrd
+```
+$ qemu-system-aarch64 -M virt -cpu cortex-a57 -smp 8 -m 4096 \
+  -kernel vmlinuz \
+  -append "rw root=/dev/vda2 console=ttyAMA0 loglevel=8 rootwait fsck.repair=yes memtest=1" \
+  -initrd initrd.img \
+  -serial mon:stdio -nographic \
+  -hda disk.qcow2 \
+  -net nic,model=e1000 \
+  -net user,hostfwd=tcp::2222-:22
+```
+#### Размонтирование виртуального диска qcow2
+```
+$ umount /mnt/
+$ qemu-nbd --disconnect /dev/nbd0
+$ rmmod nbd
 ```

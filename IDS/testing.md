@@ -49,7 +49,7 @@ port_udp=2000
 port_tcp=3000
 hping3 ${ip_address} --rawip --ipproto 254 --count 1 --sign " test_msg" --print
 echo "test_msg" > /dev/udp/${ip_address}/${port_udp}
-timeout 1 bash -c "echo test_msg > /dev/tcp/${ip_address}/${port_udp}"
+timeout 1 bash -c "echo test_msg > /dev/tcp/${ip_address}/${port_tcp}"
 ```
 ## Проверка срабатывания IDS по порту
 Правила:  
@@ -75,7 +75,7 @@ ip_address='192.168.6.100'
 port_udp=2000
 port_tcp=3000
 echo "test_msg" > /dev/udp/${ip_address}/${port_udp}
-timeout 1 bash -c "echo test_msg > /dev/tcp/${ip_address}/${port_udp}"
+timeout 1 bash -c "echo test_msg > /dev/tcp/${ip_address}/${port_tcp}"
 ```
 ## Проверка срабатывания IDS по правилу из стандартного набора malware-cnc.rules (sid: 19769)
 Правило:  
@@ -269,14 +269,16 @@ done
 ```
 net_address='192.168.6.0'
 for ((item=1; item<255; item++)); do
-  hping3 --icmp ${net_address%%0}${item} --count 1 2>&1
+  ip_address=${net_address%%0}${item}
+  hping3 --icmp ${ip_address} --count 1 2>&1
 done
 ```
 Сканирование хостов по протоколу udp
 ```
 net_address='192.168.6.0'
 for ((item=1; item<255; item++)); do
-  hping3 --udp ${net_address%%0}${item} --destport 22 --count 1 2>&1
+  ip_address=${net_address%%0}${item}
+  hping3 --udp ${ip_address} --destport 22 --count 1 2>&1
 done
 ```
 Сканирование хостов по протоколу tcp
@@ -300,6 +302,32 @@ ip_address='192.168.6.100'
 port_list='21 22 23 80 443 8080'
 for port in ${port_list}; do
   hping3 --syn ${ip_address} --destport ${port} --count 1 2>&1
+done
+```
+Сканирование хостов и портов по протоколу udp
+```
+net_address='192.168.6.0'
+timeout=0
+for item in {1..254}; do
+  ip_address=${net_address%%0}${item}
+  echo -e "$(date '+%Y-%m-%d %H:%M:%S') ip: ${ip_address}";
+  for port in {1..65000}; do
+    echo -n "test_UDP_scan" > /dev/udp/${ip_address}/${port}
+  done
+  sleep ${timeout}
+done
+```
+Сканирование хостов и портов по протоколу tcp
+```
+net_address='192.168.6.0'
+timeout=0
+for item in {1..254}; do
+  ip_address=${net_address%%0}${item}
+  echo -e "$(date '+%Y-%m-%d %H:%M:%S') ip: ${ip_address}";
+  for port in {1..65000}; do
+    timeout 1 bash -c "echo test_TCP_scan > /dev/tcp/${ip_address}/${port}"
+  done
+  sleep ${timeout}
 done
 ```
 Перебор паролей

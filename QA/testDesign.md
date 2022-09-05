@@ -123,6 +123,29 @@ Use Case описывает сценарий взаимодействия дву
 | 5 | z3 | x1 | x2 | ~~x4~~ y4 | ~~x5~~ y5 |  |
 | 6 | z3 | y1 | y2 | ~~y4~~ x4 | ~~y5~~ x5 |  |
 
+Колонка Поле 6 является более проблематичной, ведь нам не хватает комбинаций на x1&x6 и y1&y6 чтобы не нарушать отсортированные данные, нужно ввести еще 2 тестовых случая для этих комбинаций. Значком тильды “~” мы маркируем переменные, которые выступают произвольными. Таким образом мы получаем следующую таблицу.
+| | Поле 3 | Поле 1 | Поле 2 | Поле 4 | Поле 5 | Поле 6 |
+| - | - | - | - | - | - | - |
+| 1 | x3 | x1 | x2 | x4 | x5 | x6 |
+| 2 | x3 | y1 | y2 | y4 | y5 | y6 |
+| ~ | ~x3~ | x1 | ~y2~ | ~y4~ | ~y5~ | y6 |
+| 3 | y3 | x1 | ~~x2~~ y2 | x4 | ~~x5~~ y5 | x6 |
+| 4 | y3 | y1 | ~~y2~~ x2 | y4 | ~~y5~~ x5 | y6 |
+| ~ | ~y3~ | y1 | ~x2~ | ~x4~ | ~x5~ | x6 |
+| 5 | z3 | x1 | x2 | ~~x4~~ y4 | ~~x5~~ y5 | x6 |
+| 6 | z3 | y1 | y2 | ~~y4~~ x4 | ~~y5~~ x5 | y6 |
+
+Таким образом, мы получили готовые 8 тест-кейсов вместо 96.  
+
+**Утилиты для автоматизации pairwise testing**:
+* PICT — 'Pairwise Independent Combinatorial Testing', provided by Microsoft Corp.
+* IBM FoCuS — 'Functional Coverage Unified Solution', provided by IBM.
+* ACTS — 'Advanced Combinatorial Testing System', provided by NIST, an agency of the US Government.
+* Hexawise
+* Jenny
+* Pairwise by Inductive AS
+* VPTag free All-Pair Testing Tool.
+
 ## Тестирование на основе состояний и переходов (State-Transition Testing)
 Применяется для фиксирования требований и описания дизайна приложения.
 

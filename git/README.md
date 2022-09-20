@@ -67,3 +67,12 @@
 | ```git fetch --all``` | Извлечение содержимого из удаленной ветки |
 
 ## Дополнительные опции
+
+## Пример работы с gitlab
+```
+git clone http://gitlab.echelon.lan/prj/requirements.git
+git status
+git add .
+git commit -m 'test'
+git push origin master:ikh
+```

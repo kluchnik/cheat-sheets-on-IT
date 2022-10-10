@@ -1,0 +1,56 @@
+Write-Host "ВНИМАНИЕ"
+Write-Host "Скрипт необходимо выполнять в PowerShell из под учетной записи администратора"
+Write-Host "Если выполнение скриптов запрещено. Необходимо выполнять следующую комманду от имени администратора"
+Write-Host "Set-ExecutionPolicy -ExecutionPolicy Unrestricted"
+Write-Host ""
+Write-Host "Обратите внимание что в момент поиска в системе не должно быть других адаптеров с сетью 192.168.х.99"
+Write-Host ""
+Write-Host "Нажмите любую клавишу для продолжения … или Ctrl+C для отмены"
+
+$x = $host.UI.RawUI.ReadKey("NoEcho ,IncludeKeyDown")
+Wait-Event -Timeout 0.5
+
+Write-Host "Были найдены следующие адаптеры, выбирете тот к которому подключен Рубикон"
+Get-NetAdapter
+
+Write-Host ""
+$neta=read-host "Укажите индекс адаптера (ifIndex)"
+$netipstop = read-host "Укажите максимальное количество портов"
+$testconnect = $False
+$netip = 0
+$net1 = '192.168.'
+$net2 = '.1'
+
+Write-Host "Поиск..."
+
+WHILE (($testconnect -eq $False) -and ($netip -lt $netipstop)) {
+  $netip++
+  Remove-NetIPAddress -InterfaceIndex $neta -Confirm:$false
+  New-NetIPAddress -InterfaceIndex $neta -IPAddress 192.168.$netip.99 -PrefixLength 24 > $null
+  $testnet = ($net1 + $netip + $net2) 
+  Write-Host $testnet
+  Wait-Event -Timeout 4
+  $testconnect = Test-Connection  $testnet -Quiet
+  Write-Host $testconnect
+	}
+
+IF ($testconnect -eq $False) {
+  Write-Host "Адрес не найден, проверьте подключение, попробуйте сминить порт"
+  exit
+  }
+
+Write-Host "Порт находится в подсети -"$netip" его ip адресс 192.168."$netip".1 "
+Write-Host "Если нужно открыть администрирование - нажмите любую клавишу … или Ctrl+C для отмены"
+
+$x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
+Remove-NetIPAddress -InterfaceIndex $neta -Confirm:$false
+New-NetIPAddress -InterfaceIndex $neta -IPAddress 192.168.$netip.99 -PrefixLength 24 > $null
+
+$ss1 ="https://192.168."
+$ss2 =".1:8443"
+$site = $ss1 + $netip + $ss2
+Wait-Event -Timeout 3
+$ie_procinfo = Start-Process iexplore -ArgumentList $site -passthru
+
+Write-Host "Удачи"

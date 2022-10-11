@@ -1,5 +1,12 @@
 # TCP Client
 
+## Install
+```
+make
+make install
+```
+
+## Usage
 ```
 Usage: /usr/bin/tcploadechoclient -i <IP> [-i <IP> ..] -D <IP> -p <port> -n <conns> -r <pushrate> -c <connrate> [-s]
 

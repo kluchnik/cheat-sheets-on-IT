@@ -22,8 +22,8 @@ IFACE='eth0'
 IP='192.168.2.101'
 PORT='1101'
 
-ulimit -s 20000500
 ulimit -n 1048576
+ulimit -s 20000500
 echo '20000500' > /proc/sys/fs/nr_open
 echo '10000 65535' > /proc/sys/net/ipv4/ip_local_port_range
 echo '1' > /proc/sys/net/ipv4/tcp_fin_timeout
@@ -46,8 +46,8 @@ IFACE='eth0'
 IP='192.168.2.102'
 PORT='1102'
 
-ulimit -s 20000500
 ulimit -n 1048576
+ulimit -s 20000500
 echo '20000500' > /proc/sys/fs/nr_open
 echo '10000 65535' > /proc/sys/net/ipv4/ip_local_port_range
 echo '1' > /proc/sys/net/ipv4/tcp_fin_timeout
@@ -74,8 +74,8 @@ LIP='192.168.1.101'
 DIP='192.168.2.101'
 DPORT='1101'
 
-ulimit -s 20000500
 ulimit -n 1048576
+ulimit -s 20000500
 echo '20000500' > /proc/sys/fs/nr_open
 echo '10000 65535' > /proc/sys/net/ipv4/ip_local_port_range
 echo '1' > /proc/sys/net/ipv4/tcp_fin_timeout
@@ -97,8 +97,8 @@ LIP='192.168.1.102'
 DIP='192.168.2.102'
 DPORT='1102'
 
-ulimit -s 20000500
 ulimit -n 1048576
+ulimit -s 20000500
 echo '20000500' > /proc/sys/fs/nr_open
 echo '10000 65535' > /proc/sys/net/ipv4/ip_local_port_range
 echo '1' > /proc/sys/net/ipv4/tcp_fin_timeout

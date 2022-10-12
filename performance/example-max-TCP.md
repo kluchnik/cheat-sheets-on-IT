@@ -90,7 +90,7 @@ ip link set dev ${IFACE} up
 /usr/bin/tcploadechoclient -i ${LIP} -D ${DIP} -p ${DPORT} -n 50000 -r 1000 &>/dev/null &
 ```
 
-### Клиент-1
+### Клиент-2
 ```
 IFACE='eth0'
 LIP='192.168.1.102'

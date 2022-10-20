@@ -25,8 +25,8 @@ D_PORT='1000'
 ip a add ${L_IP}/24 dev ${IFACE}
 ip link set dev ${IFACE} up
 
-iperf3 --client ${D_IP} --port ${D_PORT} -T s1 --time 60 --interval 5 --set-mss 1460
-iperf3 --client ${D_IP} --port ${D_PORT} -T s1 --time 60 --interval 5 --set-mss 1460 --reverse
+iperf3 --client ${D_IP} --port ${D_PORT} -T s1 --time 60 --interval 5 -l 1460
+iperf3 --client ${D_IP} --port ${D_PORT} -T s1 --time 60 --interval 5 -l 1460 --reverse
 ```
 
 ## UDP 

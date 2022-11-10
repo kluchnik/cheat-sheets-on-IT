@@ -28,8 +28,8 @@
 | ```<TAG>[number]``` | ```//div[1]``` | Выбор элемента заданного тега и его номера |
 | ```<TAG>[@attribute]``` | ```//div[@id]``` | Выбор элементов заданного тега и наличии атрибута |
 | ```<TAG>[@*]``` | ```//div[@*]``` | Выбор элементов заданного тега и заданного атрибута |
-| ```<TAG>[@attribute='value']``` | ```//div[@id='docs-view-menu']``` | Выбор элементов заданного тега и атрибута с заданным параметром |
-| ```<TAG>[text()='value']``` | ```//div[text()='value']``` | Выбор элементов с заданным текстом |
+| ```<TAG>[@attribute='value']``` ```<TAG>[@attribute!='value']``` | ```//div[@id='docs-view-menu']``` ```//div[@id!='docs-view-menu']``` | Выбор элементов заданного тега и атрибута с заданным параметром |
+| ```<TAG>[text()='value']``` ```<TAG>[text()!='value']``` | ```//div[text()='value']``` ```//div[text()!='value']``` | Выбор элементов с заданным текстом |
 | ```<TAG>[@attribute1='value'][@attribute2='value']``` | ```//div[@class='test'][@id='docs-view-menu']``` | Выбор элементов заданного тега и атрибутами с заданным параметрами |
 | ```<TAG>[@attribute1='value' and @attribute='value']``` | ```<TAG>[@attribute1='value' and @attribute='value']``` |  |
 | ```<TAG>[@attribute1='value' or @attribute2='value']``` | ```<TAG>[@attribute1='value' or @attribute2='value']``` |  |
@@ -41,7 +41,23 @@
 
 | XPath | Пример | Описание |
 | - | - | - |
-| ```contains``` | ```<TAG>[contains(@attribute,'value')]``` ```<TAG>[contains(text(),'value')]``` | Выбор элемента заданного тега, если атрибут или текст содержит заданое значение |
-| ```starts-with``` | ```<TAG>[starts-with(@attribute,'value')]``` ```<TAG>[starts-with(text(),'value')]``` | Выбор элемента заданного тега, если атрибут или текст начинается с заданого значения |
-| ```substring( string:str, start:int, [length:int] ) -> str``` | ```substring('value', 3) -> 'lue'``` ```substring('value', 3, 1) -> 'l'``` | Обрезка строки |
-| ```string-length( [string] ) -> int``` | | 
+| ```true() -> bool``` | ```true() -> 1``` | Возвращает логичекое значение true (1) |
+| ```false() -> bool``` | ```false() -> 0``` | Возвращает логичекое значение false (0) |
+| ```not( expression ) -> bool``` | ```not(true()) -> 0``` | Логическое отрицание |
+| ```boolean( expression ) -> bool``` | ```boolean(//p[@id='docs-view-menu']) -> 0``` ```boolean(//div[@id='docs-view-menu']) -> 1``` | Логическая операция |
+| ```ceiling( number ) -> int``` | ```ceiling(5.2) -> 6``` ```ceiling(-5.2) -> -5``` | Округление числа в большую сторону |
+| ```floor( number ) -> int``` | ```floor(5.2) -> 5``` ```floor(-5.2) -> -6``` | Округление числа в меньшую сторону |
+| ```round( number ) -> int``` | ```round(5.2) -> 5``` ```round(-5.2) -> -5``` | Округление числа с отбросом десятой части |
+| ```string-length( [string] ) -> int``` | ```string-length('value') -> 5``` | Количество символов в строке |
+| ```concat( string1, string2 [,stringn]* ) -> str``` | ```concat('va','l','ue') -> 'value'``` | Склеивание строки |
+| ```normalize-space( [string] ) -> str``` | ```normalize-space('value1  value2   value3') -> 'value1 value2 value3'``` | Удаление лишних пробелов |
+| ```translate(string, abc, XYZ) -> str``` | ```translate('value', 'l', 'z') -> 'vazue'``` | Замена символов в строке |
+| ```substring( string, start, [length] ) -> str``` | ```substring('value', 3) -> 'lue'``` ```substring('value', 3, 1) -> 'l'``` | Обрезка строки слева на право по номеру символа |
+| ```substring-after( haystack, needle ) -> str``` | ```substring-after('value', 'l') -> 'ue'``` | Обрезка строки слева на право по символу |
+| ```substring-before( haystack, needle ) -> str``` | ```substring-before('value', 'l') -> 'va'``` | Обрезка строки справа на лево по символу |
+| ```contains(haystack, needle) -> bool``` | ```<TAG>[contains(@attribute,'value')] -> object[@attribute='XXXvalueXXX']``` ```<TAG>[contains(text(),'value')] -> object[text()='XXXvalueXXX']``` | Выбор элемента заданного тега, если атрибут или текст содержит заданое значение |
+| ```starts-with(haystack, needle) -> bool``` | ```<TAG>[starts-with(@attribute,'value')] -> object[@attribute='valueXXX']``` ```<TAG>[starts-with(text(),'value')] -> object[text()='valueXXX']``` | Выбор элемента заданного тега, если атрибут или текст начинается с заданого значения |
+| ```substring + string-length``` | ```<TAG>[substring(@attribute, string-length(@attribute) - string-length('value')+1)='value'] -> object[@attribute='XXXvalue']``` ```//div[substring(text(), string-length(text()) - string-length('value')+1)='value'] -> object[text()='XXXvalue']``` | Выбор элемента заданного тега, если атрибут или текст заканчивается на заданое значение |
+|
+| ```name( [node-set] ) -> <TAG>``` | ```name(//*[@id='docs-view-menu']) -> div ``` | Возвращает название тега |
+| ```count( node-set ) -> int``` | ```count(//*[@id='docs-view-menu']) -> 5 ``` | Возвращает количество найденых элементов |

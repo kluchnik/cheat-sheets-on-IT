@@ -23,19 +23,27 @@
 
 | XPath | Пример | Описание |
 | - | - | - |
-| ```*``` | ```//div/*``` | Выбор всех элементов  |
+| ```*``` | ```//div/*``` | Выбор всех элементов |
+| ```table``` | ```//table``` | Выбор таблицы |
 | ```<TAG>``` | ```//div``` | Выбор элементов заданного тега |
 | ```<TAG>[number]``` | ```//div[1]``` | Выбор элемента заданного тега и его номера |
 | ```<TAG>[@attribute]``` | ```//div[@id]``` | Выбор элементов заданного тега и наличии атрибута |
 | ```<TAG>[@*]``` | ```//div[@*]``` | Выбор элементов заданного тега и заданного атрибута |
-| ```<TAG>[@attribute='value']``` или ```<TAG>[@attribute!='value']``` | ```//div[@id='docs-view-menu']``` или ```//div[@id!='docs-view-menu']``` | Выбор элементов заданного тега и атрибута с заданным параметром |
-| ```<TAG>[text()='value']``` или ```<TAG>[text()!='value']``` | ```//div[text()='value']``` или ```//div[text()!='value']``` | Выбор элементов с заданным текстом |
+| ```<TAG>[@attribute='value']``` или ```<TAG>[@attribute!='value']``` | ```//div[@id='docs-view-menu']``` или ```//div[@id!='docs-view-menu']``` или ```//div[not(@id='docs-view-menu')]``` | Выбор элементов заданного тега и атрибута с заданным параметром |
+| ```<TAG>[text()='value']``` или ```<TAG>[.='value']``` или ```<TAG>[text()!='value']``` | ```//div[text()='value']``` или ```//div[.='value']``` или ```//div[text()!='value']``` или ```//div[not(text()='value')]``` | Выбор элементов с заданным текстом |
 | ```<TAG>[@attribute1='value'][@attribute2='value']``` | ```//div[@class='test'][@id='docs-view-menu']``` | Выбор элементов заданного тега и атрибутами с заданным параметрами |
-| ```<TAG>[@attribute1='value' and @attribute='value']``` | ```<TAG>[@attribute1='value' and @attribute='value']``` |  |
+| ```<TAG>[@attribute1='value' and @attribute='value']``` | ```<TAG>[@attribute1='value' and @attribute='value']``` или ```<TAG>[@attribute1='value' and not( @attribute='value'])``` |  |
 | ```<TAG>[@attribute1='value' or @attribute2='value']``` | ```<TAG>[@attribute1='value' or @attribute2='value']``` |  |
 | ```<TAG1>[@attribute='value'] \| <TAG2>[@attribute='value']``` | ```<TAG1>[@attribute='value'] \| <TAG2>[@attribute='value']``` |  |
 | ```<TAG1>[@attribute='value'] or <TAG2>[@attribute='value']``` | ```<TAG1>[@attribute='value'] or <TAG2>[@attribute='value']``` | Наличие элемента в соответсвии с заданными параметрами |
 | ```<TAG1>[@attribute='value'] and <TAG2>[@attribute='value']``` | ```<TAG1>[@attribute='value'] and <TAG2>[@attribute='value']``` | Наличие элемента в соответсвии с заданными параметрами |
+
+## Атрибуты
+
+| XPath | Пример | Описание |
+| - | - | - |
+| ```@attribute``` | ```//div/@id``` | Возвращает значение атрибута |
+| ```text()``` | ```//div[@id='docs-view-menu']/text()``` | Возвращает значение текста |
 
 ## Функции
 

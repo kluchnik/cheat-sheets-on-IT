@@ -58,6 +58,5 @@
 | ```contains(haystack, needle) -> bool``` | ```<TAG>[contains(@attribute,'value')] -> object[@attribute='XXXvalueXXX']``` ```<TAG>[contains(text(),'value')] -> object[text()='XXXvalueXXX']``` | Выбор элемента заданного тега, если атрибут или текст содержит заданое значение |
 | ```starts-with(haystack, needle) -> bool``` | ```<TAG>[starts-with(@attribute,'value')] -> object[@attribute='valueXXX']``` ```<TAG>[starts-with(text(),'value')] -> object[text()='valueXXX']``` | Выбор элемента заданного тега, если атрибут или текст начинается с заданого значения |
 | ```substring + string-length``` | ```<TAG>[substring(@attribute, string-length(@attribute) - string-length('value')+1)='value'] -> object[@attribute='XXXvalue']``` ```//div[substring(text(), string-length(text()) - string-length('value')+1)='value'] -> object[text()='XXXvalue']``` | Выбор элемента заданного тега, если атрибут или текст заканчивается на заданое значение |
-|
 | ```name( [node-set] ) -> <TAG>``` | ```name(//*[@id='docs-view-menu']) -> div ``` | Возвращает название тега |
 | ```count( node-set ) -> int``` | ```count(//*[@id='docs-view-menu']) -> 5 ``` | Возвращает количество найденых элементов |

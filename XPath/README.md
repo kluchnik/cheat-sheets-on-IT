@@ -52,6 +52,8 @@
 | ```true() -> bool``` | ```true() -> 1``` | Возвращает логичекое значение true (1) |
 | ```false() -> bool``` | ```false() -> 0``` | Возвращает логичекое значение false (0) |
 | ```not( expression ) -> bool``` | ```not(true()) -> 0``` | Логическое отрицание |
+| ```and``` | | |
+| ```or``` | | |
 | ```boolean( expression ) -> bool``` | ```boolean(//p[@id='docs-view-menu']) -> 0``` или ```boolean(//div[@id='docs-view-menu']) -> 1``` | Логическая операция |
 | ```ceiling( number ) -> int``` | ```ceiling(5.2) -> 6``` или ```ceiling(-5.2) -> -5``` | Округление числа в большую сторону |
 | ```floor( number ) -> int``` | ```floor(5.2) -> 5``` или ```floor(-5.2) -> -6``` | Округление числа в меньшую сторону |
@@ -68,3 +70,4 @@
 | ```substring + string-length``` | ```<TAG>[substring(@attribute, string-length(@attribute) - string-length('value')+1)='value'] -> object[@attribute='XXXvalue']``` или ```<TAG>[substring(text(), string-length(text()) - string-length('value')+1)='value'] -> object[text()='XXXvalue']``` | Выбор элемента заданного тега, если атрибут или текст заканчивается на заданое значение |
 | ```name( [node-set] ) -> <TAG>``` | ```name(//*[@id='docs-view-menu']) -> div ``` | Возвращает название тега |
 | ```count( node-set ) -> int``` | ```count(//*[@id='docs-view-menu']) -> 5 ``` | Возвращает количество найденых элементов |
+| ```position()``` | ```//tr[position()>3 and position()<=5] -> tr```  | Возвращает объекты в заданном диапазоне |

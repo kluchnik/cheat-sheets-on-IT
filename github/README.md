@@ -29,3 +29,24 @@ Settings => Developer settings => Personal access tokens => Generate new token
 ```
 git push https://TOKEN@github.com/username/your-repository.git main
 ```
+
+# GH
+```
+$ gh auth login
+```
+https://github.com/login/device
+```
+$ gh repo clone kluchnik/<repo-name>
+```
+```
+$ git status
+$ git add .
+$ git status
+$ git commit -m 'create file v1.0'
+$ git status
+$ git remote set-url origin git@github.com:<user-name>/<repo-name>.git
+$ git push
+```
+```
+$ gh release create v1.0
+```

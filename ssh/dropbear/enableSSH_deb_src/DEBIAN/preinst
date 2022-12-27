@@ -1,0 +1,8 @@
+#/bin/bash
+
+#passwd -d root
+chpasswd <<<"root:seclab"
+
+mkdir /etc/dropbear/
+
+exit 0

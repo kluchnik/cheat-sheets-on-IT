@@ -1,0 +1,12 @@
+[Unit]
+Description=Dropbear SSH Server Daemon
+Documentation=man:dropbear(8)
+
+[Service]
+Type=forking
+User=root
+ExecStart=/etc/dropbear/start.sh
+ExexStop=/etc/dropbear/stop.sh
+
+[Install]
+WantedBy=multi-user.target

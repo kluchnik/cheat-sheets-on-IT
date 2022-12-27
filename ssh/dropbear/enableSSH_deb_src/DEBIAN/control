@@ -1,0 +1,7 @@
+Package: enableSSH
+Version: 1.0-5
+Section: misc
+Architecture: all
+Depends: bash
+Maintainer: kluchnik
+Description: Enable SSH

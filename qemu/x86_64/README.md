@@ -11,7 +11,7 @@ $ qemu-system-x86_64 \
   -enable-kvm \
   -cpu kvm64 \
   -m 2048 \
-  -boot once=c \
+  -boot once=d \
   -cdrom ${ISO_FILE} \
   -hda ${VM_DISK} \
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
@@ -31,6 +31,46 @@ $ qemu-system-x86_64 \
   -daemonize \
   -pidfile ${PID_FILE}
 ```
+### Первая загрузка с CD-ROM:
+```
+...
+  -boot once=d
+```
+### Загрузка с HDA:
+```
+...
+  -boot c
+```
+
+### Сеть через проброс порта
+```
+...
+  -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
+  -netdev user,id=net1,net=192.168.1.0/24,hostfwd=tcp::8443-192.168.1.1:8443 \
+```
+### Способ перенаправления входящих внешних соединений на localhost
+```
+socat tcp-listen:8001,reuseaddr,fork tcp:localhost:8443
+```
+### Автоматическое создание tap интерфейса
+```
+$ cat /home/user/qemu/ifup
+
+#!/bin/bash
+ip link set dev tap1 up
+ip a change dev tap1 192.168.1.100/24
+exit 0
+```
+```
+...
+  -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
+  -netdev tap,id=net1,ifname=tap1,script=/home/user/qemu/ifup,downscript=no \
+```
+### Настройка перенаправления через iptables
+```
+$ iptables -t nat -A PREROUTING -d 0.0.0.0/0 -p tcp --dport 8001 -j DNAT --to-destination 192.168.1.1:8443
+$ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
+```
 
 ## Видеовыход через VNC
 ```
@@ -42,9 +82,19 @@ $ qemu-system-x86_64 \
 
 ## Подключение monitor для управления ВМ
 ```
+...
+  -monitor stdio
+```
+или
+```
 $ mkfifo vm_monitor.in
 $ mkfifo vm_monitor.out
 
 ...
   -monitor pipe:vm_monitor
+ 
+$ echo 'help' > vm_monitor.in
+$ cat vm_monitor.out | less
+
+$ echo 'quit' > vm_monitor.in
 ```

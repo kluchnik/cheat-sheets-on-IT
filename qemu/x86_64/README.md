@@ -48,11 +48,11 @@ $ qemu-system-x86_64 \
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
   -netdev user,id=net1,net=192.168.1.0/24,hostfwd=tcp::8443-192.168.1.1:8443 \
 ```
-### Способ перенаправления входящих внешних соединений на localhost
+Способ перенаправления входящих внешних соединений на localhost
 ```
 socat tcp-listen:8001,reuseaddr,fork tcp:localhost:8443
 ```
-### Автоматическое создание tap интерфейса
+### Сеть: автоматическое создание tap интерфейса
 ```
 $ cat /home/user/qemu/ifup
 
@@ -66,7 +66,33 @@ exit 0
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
   -netdev tap,id=net1,ifname=tap1,script=/home/user/qemu/ifup,downscript=no \
 ```
-### Настройка перенаправления через iptables
+Настройка перенаправления через iptables
+```
+$ iptables -t nat -A PREROUTING -d 0.0.0.0/0 -p tcp --dport 8001 -j DNAT --to-destination 192.168.1.1:8443
+$ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
+```
+
+### Сеть: подключение VM к bridge
+```
+$ brctl show
+$ brctl add vmbr1
+
+$ ip link set dev vmbr1 up
+$ ip a change dev vmbr1 192.168.1.100/24
+```
+```
+$ USER='user'
+$ echo "allow all" | sudo tee /etc/qemu/${USER}.conf
+$ echo "include /etc/qemu/${USER}.conf" | sudo tee --append /etc/qemu/bridge.conf
+$ sudo chown root:${USER} /etc/qemu/${USER}.conf
+$ sudo chmod 640 /etc/qemu/${USER}.conf
+```
+```
+...
+  -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
+  -netdev bridge,id=net1,br=vmbr1 \
+```
+Настройка перенаправления через iptables
 ```
 $ iptables -t nat -A PREROUTING -d 0.0.0.0/0 -p tcp --dport 8001 -j DNAT --to-destination 192.168.1.1:8443
 $ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE

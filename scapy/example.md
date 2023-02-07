@@ -80,7 +80,7 @@ package.show2()
 scapy.sendp(package, iface=iface)
 ```
 
-## eth//ip[security]/udp/data
+## eth/ip[security]/udp/data
 ```
 import scapy.all as scapy
 

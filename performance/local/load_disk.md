@@ -27,7 +27,9 @@ function run_log_disk() {
 
 run_log_disk > ${LOG_FILE} & echo $! > ${PIDFILE}
 ```
+
 ### Сервис init.d
+
 ```bash
 $ sudo touch /etc/init.d/log_disk
 $ sudo chmod 777 /etc/init.d/log_disk
@@ -81,7 +83,9 @@ esac
 
 exit 0
 ```
+
 ### Сервис systemctl
+
 ```bash
 $ sudo touch /etc/systemd/system/log_disk.service
 $ sudo chmod +x /etc/systemd/system/log_disk.service
@@ -102,7 +106,9 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
 ### Запуск
+
 ```bash
 $ sudo systemctl daemon-reload
 $ sudo systemctl start log_disk.service

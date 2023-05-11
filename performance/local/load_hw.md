@@ -18,12 +18,12 @@ PIDFILE='/var/run/load_hw.pid'
 function run_log_hw() {
   while :
   do
-    cpuUsage=$(top -bn1 | grep load | head -1 | awk '{printf "%.2f%%", $(NF-2)}')
+    cpuUsage=$(top -bn1 | grep load | head -1 | awk '{printf "%.2f", $(NF-2)}')
     memUsage=$(free -m | awk '/Mem/{print $3}')
     # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
-    diskUsage=$(df -h ${DISK} -BMB | tail -1 | awk '{print $3}')
+    diskUsage=$(df -h ${DISK} -BMB | tail -1 | awk '{print $3}' | sed s/[^0-9.]//g)
     # diskUsage=$(df -h | awk '$NF=="/"{printf "%s", $5}')
-    echo "$(date +"%T") ${cpuUsage} ${memUsage}MB ${diskUsage}"
+    echo "$(date +"%T") ${cpuUsage} % ${memUsage} MB ${diskUsage} MB"
     sleep 1
   done
 }

@@ -64,7 +64,7 @@ case "$1" in
      status_of_proc -p ${PIDFILE} ${DAEMON} atd && exit 0 || exit $?
    ;;
  *)
-   echo "Usage: /etc/init.d/load_disk {start|stop|restart|force-reload|status}"
+   echo "Usage: /etc/init.d/log_disk {start|stop|restart|force-reload|status}"
    exit 1
   ;;
 esac

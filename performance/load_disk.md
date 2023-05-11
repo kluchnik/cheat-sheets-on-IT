@@ -4,9 +4,9 @@
 
 ### Скрипт запуска
 ```bash
-$ sudo touch /usr/bin/log_disk
-$ sudo chmod 777 /usr/bin/log_disk
-$ sudo nano /usr/bin/log_disk
+$ sudo touch /usr/bin/load_disk
+$ sudo chmod 777 /usr/bin/load_disk
+$ sudo nano /usr/bin/load_disk
 ```
 ```bash
 #!/bin/bash
@@ -37,7 +37,7 @@ sudo nano /etc/init.d/log_disk
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
 PIDFILE='/var/run/load_disk.pid'
-DAEMON="/usr/bin/log_disk"
+DAEMON="/usr/bin/load_disk"
 
 #test -x ${DAEMON} || exit 0
 

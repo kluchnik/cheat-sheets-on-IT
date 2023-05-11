@@ -11,8 +11,8 @@ $ sudo nano /usr/bin/load_hw
 ```bash
 #!/bin/bash
 
-DISK='/dev/sdb2'
-LOG_FILE='/var/log/load_hw.log'
+# DISK='/dev/sdb2'
+LOG_FILE='/var/log/load_hw.csv'
 PIDFILE='/var/run/load_hw.pid'
 
 echo 'date,cpu_%,mem_MB,disk_MB' > ${LOG_FILE}
@@ -23,14 +23,13 @@ function run_log_hw() {
     cpuUsage=$(top -bn1 | grep load | head -1 | awk '{printf "%.2f", $(NF-2)}')
     memUsage=$(free -m | awk '/Mem/{print $3}')
     # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
-    diskUsage=$(df -h ${DISK} -BMB | tail -1 | awk '{print $3}' | sed s/[^0-9.]//g)
-    # diskUsage=$(df -h | awk '$NF=="/"{printf "%s", $5}')
+    diskUsage=$(df -h -BMB | awk '$NF=="/"{printf "%s", $3}' | sed s/[^0-9.]//g)
     echo "$(date +"%T"),${cpuUsage},${memUsage},${diskUsage}"
     sleep 1
   done
 }
 
-run_log_hw > ${LOG_FILE} & echo $! > ${PIDFILE}
+run_log_hw >> ${LOG_FILE} & echo $! > ${PIDFILE}
 ```
 
 ### Сервис init.d

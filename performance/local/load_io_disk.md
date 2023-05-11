@@ -19,9 +19,9 @@ iostat -x ${DISK_NAME} -d 1 -t -m > ${LOG_FILE} & echo $! > ${PIDFILE}
 ```
 ### Сервис init.d
 ```bash
-sudo touch /etc/init.d/log_io_disk
-sudo chmod 777 /etc/init.d/log_io_disk
-sudo nano /etc/init.d/log_io_disk
+$ sudo touch /etc/init.d/log_io_disk
+$ sudo chmod 777 /etc/init.d/log_io_disk
+$ sudo nano /etc/init.d/log_io_disk
 ```
 ```bash
 #! /bin/sh
@@ -73,9 +73,9 @@ exit 0
 ```
 ### Сервис systemctl
 ```bash
-touch /etc/systemd/system/log_io_disk.service
-chmod +x /etc/systemd/system/log_io_disk.service
-nano /etc/systemd/system/log_io_disk.service
+$ sudo touch /etc/systemd/system/log_io_disk.service
+$ sudo chmod +x /etc/systemd/system/log_io_disk.service
+$ sudo nano /etc/systemd/system/log_io_disk.service
 ```
 ```bash
 [Unit]

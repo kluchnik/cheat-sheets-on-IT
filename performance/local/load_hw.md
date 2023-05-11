@@ -20,7 +20,7 @@ function run_log_hw() {
   do
     cpuUsage=$(top -bn1 | grep load | head -1 | awk '{printf "%.2f%%\t\t\n", $(NF-2)}')
     memUsage=$(free -m | awk '/Mem/{print $3}')
-    # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }')
+    # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
     diskUsage=$(df -h ${DISK} -BMB | tail -1 | awk '{print $3}')
     # diskUsage=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}')
     echo "$(date +"%T") ${cpuUsage} ${memUsage}MB ${diskUsage}"

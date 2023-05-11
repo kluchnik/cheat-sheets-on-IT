@@ -18,7 +18,7 @@ function run_log_mem() {
   while :
   do
     memUsage=$(free -m | awk '/Mem/{print $3}')
-	#memUsage=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }')
+    #memUsage=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }')
     echo "$(date +"%T") ${memUsage} MB"
     sleep 1
   done
@@ -88,7 +88,7 @@ $ sudo nano /etc/systemd/system/log_mem.service
 ```
 ```bash
 [Unit]
-Description=Logging of load disk
+Description=Logging of load mem
 
 [Service]
 Type=forking

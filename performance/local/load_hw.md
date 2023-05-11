@@ -11,7 +11,6 @@ $ sudo nano /usr/bin/load_hw
 ```bash
 #!/bin/bash
 
-# DISK='/dev/sdb2'
 LOG_FILE='/var/log/load_hw.csv'
 PIDFILE='/var/run/load_hw.pid'
 

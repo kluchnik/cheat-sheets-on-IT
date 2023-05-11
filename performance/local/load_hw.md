@@ -15,6 +15,8 @@ DISK='/dev/sdb2'
 LOG_FILE='/var/log/load_hw.log'
 PIDFILE='/var/run/load_hw.pid'
 
+echo 'date,cpu_%,mem_MB,disk_MB' > ${LOG_FILE}
+
 function run_log_hw() {
   while :
   do
@@ -23,7 +25,7 @@ function run_log_hw() {
     # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
     diskUsage=$(df -h ${DISK} -BMB | tail -1 | awk '{print $3}' | sed s/[^0-9.]//g)
     # diskUsage=$(df -h | awk '$NF=="/"{printf "%s", $5}')
-    echo "$(date +"%T") ${cpuUsage} % ${memUsage} MB ${diskUsage} MB"
+    echo "$(date +"%T"),${cpuUsage},${memUsage},${diskUsage}"
     sleep 1
   done
 }

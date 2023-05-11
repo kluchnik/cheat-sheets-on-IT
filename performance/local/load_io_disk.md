@@ -11,11 +11,23 @@ $ sudo nano /usr/bin/load_io_disk
 ```bash
 #!/bin/bash
 
-DISK_NAME='sdb'
+DISK='sdb'
 LOG_FILE='/var/log/load_io_disk.log'
 PIDFILE='/var/run/load_io_disk.pid'
 
-iostat -x ${DISK_NAME} -d 1 -t -m > ${LOG_FILE} & echo $! > ${PIDFILE}
+#iostat -x ${DISK} -d 1 -t -m > ${LOG_FILE} & echo $! > ${PIDFILE}
+
+function run_log_io_disk() {
+  while :
+  do
+    diskIO=$(iostat -x ${DISK} -d -m | grep ${DISK})
+    echo "$(date +"%T") ${diskIO}"
+    sleep 1
+  done
+}
+
+run_log_io_disk > ${LOG_FILE} & echo $! > ${PIDFILE}
+
 ```
 ### Сервис init.d
 ```bash

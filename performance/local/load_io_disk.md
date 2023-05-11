@@ -94,8 +94,8 @@ WantedBy=multi-user.target
 ```
 ### Запуск
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl start log_io_disk.service
-sudo systemctl status log_io_disk.service
-sudo systemctl stop log_io_disk.service
+$ sudo systemctl daemon-reload
+$ sudo systemctl start log_io_disk.service
+$ sudo systemctl status log_io_disk.service
+$ sudo systemctl stop log_io_disk.service
 ```

@@ -24,7 +24,7 @@ def main(argv):
   input_f, output_f = get_args(argv)
   # Import Data
   df = pd.read_csv(input_f)
-  x = df['date']
+  x = df['time']
   y1 = df['cpu_%']
   y2 = df['mem_MB']
   y3 = df['disk_MB']
@@ -46,7 +46,7 @@ def main(argv):
   ax3.ticklabel_format(style='plain', useOffset=False, axis='y')
   
   # Decorations X axis
-  ax1.set_xlabel('date', fontsize=20)
+  ax1.set_xlabel('time', fontsize=20)
   ax1.tick_params(axis='x', rotation=90, labelsize=1)
   # Decorations left Y1 axis
   ax1.set_ylabel('cpu, %', color='tab:red', fontsize=20)

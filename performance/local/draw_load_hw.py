@@ -41,7 +41,9 @@ def main(argv):
   
   # Plot Line3 (Right Y Axis)
   ax3 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-  ax3.spines.right.set_position(("axes", 1.1))
+  ax3.spines.right.set_position(('axes', 1.1))
+  # old version matplotlib:
+  # ax3.spines['right'].set_position(('axes', 1.1))
   ax3.plot(x, y3, color='tab:green')
   ax3.ticklabel_format(style='plain', useOffset=False, axis='y')
   

@@ -14,7 +14,7 @@ $ sudo nano /usr/bin/load_hw
 LOG_FILE='/var/log/load_hw.csv'
 PIDFILE='/var/run/load_hw.pid'
 
-echo 'date,cpu_%,mem_MB,disk_MB' > ${LOG_FILE}
+echo 'time,cpu_%,mem_MB,disk_MB' > ${LOG_FILE}
 
 function run_log_hw() {
   while :

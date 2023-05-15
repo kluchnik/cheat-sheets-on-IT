@@ -14,12 +14,12 @@ $ sudo nano /usr/bin/load_cpu_core
 LOG_FILE='/var/log/load_cpu_core.csv'
 PIDFILE='/var/run/load_cpu_core.pid'
 
-max_core_cpu=$( lscpu | grep '^CPU(s):' | awk '{ print $2 }' )
+max_cpu_core=$( lscpu | grep '^CPU(s):' | awk '{ print $2 }' )
 header='time,'
-for (( item=1; item<=${max_core_cpu}; item++ )) do
+for (( item=1; item<=${max_cpu_core}; item++ )) do
   header="${header}${item},"
 done
-header=$( echo ${header} | sed 's/,$//' ) 
+header=$( echo ${header} | sed 's/,$//' )
 echo ${header} > ${LOG_FILE}
 
 if [[ -n $( date | grep -E "(AM|PM)" ) ]];
@@ -32,12 +32,14 @@ function run_log_cpu_core() {
   do
     result=''
     list_load_cpu=$( mpstat -P ALL | grep -i -E -w '^[0-9]+:[0-9]+:[0-9]+ (AM|PM|)[ ]+[0-9]+' )
-    for (( item=0; item<${max_core_cpu}; item++ )); do
+    for (( item=0; item<${max_cpu_core}; item++ )); do
       if [[ ${time_type} -eq 1 ]];
-        then load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+${item} " | awk '{print $4}' | sed 's/,/./' )
-        else load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+${item} " | awk '{print $3}' | sed 's/,/./' )
+      then
+        load_cpu_core=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+${item} " | sed 's/,/./' | awk '{sum=$4+$6} END {print sum}' )
+      else
+        load_cpu_core=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+${item} " | sed 's/,/./' | awk '{sum=$3+$5} END {print sum}' )
       fi
-      result="${result}${load_core_cpu},"
+      result="${result}${load_cpu_core},"
     done
     result=$( echo ${result} | sed 's/,$//' )
     echo "$(date +"%T"),${result}"

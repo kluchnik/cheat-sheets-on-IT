@@ -47,7 +47,7 @@ def read_log_file(input_f:str, disk_name:str) -> tuple:
         header = re.sub(r'[ ]+', ',', find_header[0]).split(',')
 	number_r_MBps = header.index('rMB/s')
 	number_w_MBps = header.index('wMB/s')
-	number_svctm_ms = header.index('svctm')
+	#number_svctm_ms = header.index('svctm')
 	number_util_pct = header.index('%util')
         metering = find_metering[0]
         metering = re.sub(r',', '.', metering)
@@ -57,7 +57,8 @@ def read_log_file(input_f:str, disk_name:str) -> tuple:
           time = np.append(time, tmp_time[0].split(' ')[1])
           r_MBps = np.append(r_MBps, metering[number_r_MBps])
           w_MBps = np.append(w_MBps, metering[number_w_MBps])
-          svctm_ms = np.append(svctm_ms, metering[number_svctm_ms])
+          #svctm_ms = np.append(svctm_ms, metering[number_svctm_ms])
+          svctm_ms = np.append(svctm_ms, 0)
           util_pct = np.append(util_pct, metering[number_util_pct])
   
   return (time,

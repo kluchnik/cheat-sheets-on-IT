@@ -20,7 +20,7 @@ function run_log_hw() {
   while :
   do
     #cpuUsage=$(top -bn1 | grep load | head -1 | awk '{printf "%.2f", $(NF-2)}')
-    cpuUsage=$(top -bn1 | grep load | awk '/load average:/{print $10}' | sed 's/.$//' | sed 's/,/./')
+    cpuUsage=$(top -bn1 | grep load | awk '/load average:/{print $12}' | sed 's/.$//' | sed 's/,/./')
     memUsage=$(free -m | awk '/Mem/{print $3}')
     # memUsage=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
     diskUsage=$(df -h -BMB | awk '$NF=="/"{printf "%s", $3}' | sed s/[^0-9.]//g)

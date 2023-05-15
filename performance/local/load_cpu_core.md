@@ -34,8 +34,8 @@ function run_log_cpu_core() {
     list_load_cpu=$( mpstat -P ALL | grep -i -E -w '^[0-9]+:[0-9]+:[0-9]+ (AM|PM|)[ ]+[0-9]+' )
     for (( item=0; item<${max_core_cpu}; item++ )); do
       if [[ ${time_type} -eq 1 ]];
-        then load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+${item} " | awk '{print $4}' )
-        else load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+${item} " | awk '{print $3}' )
+        then load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+${item} " | awk '{print $4}' | sed 's/,/./' )
+        else load_core_cpu=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+${item} " | awk '{print $3}' | sed 's/,/./' )
       fi
       result="${result}${load_core_cpu},"
     done

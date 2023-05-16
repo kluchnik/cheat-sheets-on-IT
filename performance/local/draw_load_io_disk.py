@@ -31,36 +31,38 @@ def read_log_file(input_f:str, disk_name:str) -> tuple:
   w_MBps = np.array([])
   svctm_ms = np.array([])
   util_pct = np.array([])
-
   with open(input_f, "r") as file:
-    tmp_time = []
+    count_find  = 0
     for line in file:
-      find_data_time = re.findall(r'^\d+/\d+/\d+ \d+:\d+:\d+', line.strip())
-      if find_data_time != tmp_time:
-        tmp_time = find_data_time
-	find_header = []
-	find_metering = []
-      else:
-        find_header = re.findall(r'^Device.*', line.strip())
-        find_metering = re.findall(r'^{}.*'.format(disk_name), line.strip())
-      if find_metering and find_header:
+      find_data_time = re.findall(r'^\d+[/.]\d+[/.]\d+ \d+:\d+:\d+', line.strip())
+      find_header = re.findall(r'^Device.*', line.strip())
+      find_metering = re.findall(r'^{}.*'.format(disk_name), line.strip())
+      if find_data_time:
+        count_find += 1
+        dtime = find_data_time[0].split(' ')[1]
+        #print('data_time: ', tmp_data_time)
+      elif find_header:
+        #print('header:', find_header)
+        count_find += 1
         header = re.sub(r'[ ]+', ',', find_header[0]).split(',')
-	number_r_MBps = header.index('rMB/s')
-	number_w_MBps = header.index('wMB/s')
-	#number_svctm_ms = header.index('svctm')
-	number_util_pct = header.index('%util')
+        number_r_MBps = header.index('rMB/s')
+        number_w_MBps = header.index('wMB/s')
+        number_svctm_ms = header.index('svctm')
+        number_util_pct = header.index('%util')
+      elif find_metering:
+        count_find += 1
+        #print('metering:', find_metering)
         metering = find_metering[0]
         metering = re.sub(r',', '.', metering)
         metering = re.sub(r'[ ]+', ',', metering)
         metering = metering.split(',')
-        if tmp_time:
-          time = np.append(time, tmp_time[0].split(' ')[1])
-          r_MBps = np.append(r_MBps, metering[number_r_MBps])
-          w_MBps = np.append(w_MBps, metering[number_w_MBps])
-          #svctm_ms = np.append(svctm_ms, metering[number_svctm_ms])
-          svctm_ms = np.append(svctm_ms, 0)
-          util_pct = np.append(util_pct, metering[number_util_pct])
-  
+      if count_find >= 3:
+        time = np.append(time, dtime)
+        r_MBps = np.append(r_MBps, metering[number_r_MBps])
+        w_MBps = np.append(w_MBps, metering[number_w_MBps])
+        svctm_ms = np.append(svctm_ms, metering[number_svctm_ms])
+        util_pct = np.append(util_pct, metering[number_util_pct])
+        count_find = 0
   return (time,
           util_pct.astype(np.float64),
           r_MBps.astype(np.float64),

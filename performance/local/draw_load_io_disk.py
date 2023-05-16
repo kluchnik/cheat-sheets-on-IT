@@ -40,9 +40,7 @@ def read_log_file(input_f:str, disk_name:str) -> tuple:
       if find_data_time:
         count_find += 1
         dtime = find_data_time[0].split(' ')[1]
-        #print('data_time: ', tmp_data_time)
       elif find_header:
-        #print('header:', find_header)
         count_find += 1
         header = re.sub(r'[ ]+', ',', find_header[0]).split(',')
         number_r_MBps = header.index('rMB/s')
@@ -51,7 +49,6 @@ def read_log_file(input_f:str, disk_name:str) -> tuple:
         number_util_pct = header.index('%util')
       elif find_metering:
         count_find += 1
-        #print('metering:', find_metering)
         metering = find_metering[0]
         metering = re.sub(r',', '.', metering)
         metering = re.sub(r'[ ]+', ',', metering)

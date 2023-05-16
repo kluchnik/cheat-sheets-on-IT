@@ -29,13 +29,11 @@ function run_log_cpu_iowait() {
   while :
   do
     list_load_cpu=$( mpstat -P ALL | grep -i -E -w '^[0-9]+:[0-9]+:[0-9]+ (AM|PM|)[ ]+[0-9]+' )
-    for (( item=0; item<${max_cpu_core}; item++ )); do
-      if [[ ${time_type} -eq 1 ]];
-        then load_cpu_iowait=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+${item} " | sed 's/,/./' | awk 'BEGIN{max=0}{if ($7>0+max) max=$7} END {print max}' )
-        else load_cpu_iowait=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+${item} " | sed 's/,/./' | awk 'BEGIN{max=0}{if ($6>0+max) max=$6} END {print max}' )
-      fi
-    done
-    echo "$(date +"%T"),${load_cpu_iowait}"
+    if [[ ${time_type} -eq 1 ]];
+      then max_cpu_iowait=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+ (AM|PM)[ ]+[0-9]+ " | sed 's/,/./g' | awk 'BEGIN{max=0}{if ($7>0+max) max=$7} END {print max}' )
+      else max_cpu_iowait=$( echo ${list_load_cpu} | grep -i -E -w "^[0-9]+:[0-9]+:[0-9]+[ ]+[0-9]+ " | sed 's/,/./g' | awk 'BEGIN{max=0}{if ($6>0+max) max=$6} END {print max}' )
+    fi
+    echo "$(date +"%T"),${max_cpu_iowait}"
     sleep 1
   done
 }

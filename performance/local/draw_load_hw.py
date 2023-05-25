@@ -21,7 +21,7 @@ def get_args(argv) -> tuple:
       output_f = arg
     elif opt in ("-l", "--level"):
       level = arg
-  return input_f, output_f, level
+  return input_f, output_f, int(level)
     
 def main(argv):
   input_f, output_f, level = get_args(argv)

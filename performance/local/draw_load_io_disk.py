@@ -23,7 +23,7 @@ def get_args(argv) -> tuple:
       disk_name = arg
     elif opt in ("-l", "--level"):
       level = arg
-  return input_f, output_f, disk_name, level
+  return input_f, output_f, disk_name, int(level)
 
 def read_log_file(input_f:str, disk_name:str) -> tuple:
   time = np.array([])

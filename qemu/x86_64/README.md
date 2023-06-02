@@ -107,18 +107,26 @@ $ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
 ```
 
 ## Подключение monitor для управления ВМ
+### Через stdio
 ```
 ...
   -monitor stdio
 ```
-или
+### Через pipe-file
 ```
 $ mkfifo vm_monitor.in
 $ mkfifo vm_monitor.out
-
+```
+```
 ...
   -monitor pipe:vm_monitor
- 
+```
+или
+```
+  -chardev pipe,id=monitor,path=vm_monitor
+  -monitor chardev:monitor
+```
+```
 $ echo 'help' > vm_monitor.in
 $ cat vm_monitor.out | less
 

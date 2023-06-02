@@ -61,6 +61,7 @@ ip link set dev tap1 up
 ip a change dev tap1 192.168.1.100/24
 exit 0
 ```
+Параметры ВМ:
 ```
 ...
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
@@ -75,7 +76,7 @@ $ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
 ### Сеть: подключение VM к bridge
 ```
 $ brctl show
-$ brctl add vmbr1
+$ brctl addbr vmbr1
 
 $ ip link set dev vmbr1 up
 $ ip a change dev vmbr1 192.168.1.100/24
@@ -87,11 +88,17 @@ $ echo "include /etc/qemu/${USER}.conf" | sudo tee --append /etc/qemu/bridge.con
 $ sudo chown root:${USER} /etc/qemu/${USER}.conf
 $ sudo chmod 640 /etc/qemu/${USER}.conf
 ```
+Добавление интерфейса к мосту:
+```
+brctl addif vmbr1 eth0
+```
+Параметры ВМ:
 ```
 ...
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
   -netdev bridge,id=net1,br=vmbr1 \
 ```
+
 Настройка перенаправления через iptables
 ```
 $ iptables -t nat -A PREROUTING -d 0.0.0.0/0 -p tcp --dport 8001 -j DNAT --to-destination 192.168.1.1:8443
@@ -117,11 +124,12 @@ $ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
 $ mkfifo vm_monitor.in
 $ mkfifo vm_monitor.out
 ```
+Параметры ВМ:
 ```
 ...
   -monitor pipe:vm_monitor
 ```
-или
+или параметры ВМ:
 ```
 ...
   -chardev pipe,id=monitor,path=vm_monitor

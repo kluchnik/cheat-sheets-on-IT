@@ -123,6 +123,7 @@ $ mkfifo vm_monitor.out
 ```
 или
 ```
+...
   -chardev pipe,id=monitor,path=vm_monitor
   -monitor chardev:monitor
 ```

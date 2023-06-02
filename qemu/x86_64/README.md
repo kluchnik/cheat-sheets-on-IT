@@ -82,7 +82,9 @@ $ ip link set dev vmbr1 up
 $ ip a change dev vmbr1 192.168.1.100/24
 ```
 ```
+$ mkdir -p /etc/qemu/
 $ USER='user'
+$ touch /etc/qemu/${USER}.conf
 $ echo "allow all" | sudo tee /etc/qemu/${USER}.conf
 $ echo "include /etc/qemu/${USER}.conf" | sudo tee --append /etc/qemu/bridge.conf
 $ sudo chown root:${USER} /etc/qemu/${USER}.conf

@@ -15,7 +15,7 @@ $ qemu-system-x86_64 \
   -cdrom ${ISO_FILE} \
   -hda ${VM_DISK} \
   -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
-  -netdev user,id=net1,net=192.168.1.0/24,hostfwd=tcp::8443-192.168.1.1:8443 \
+  -netdev user,id=net1,hostfwd=tcp::2201-:22 \
   -device e1000,netdev=net2,mac=00:50:DA:82:8A:02 \
   -netdev user,id=net2 \
   -device e1000,netdev=net3,mac=00:50:DA:82:8A:03 \

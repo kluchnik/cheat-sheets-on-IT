@@ -11,6 +11,7 @@ host:
 brctl addbr vmbr1
 brctl addif vmbr1 eth0
 brctl show
+ip link set dev eth0 up
 ip link set dev vmbr1 up
 ```
 ```
@@ -48,6 +49,7 @@ host:
 brctl addbr vmbr2
 brctl addif vmbr2 eth1
 brctl show
+ip link set dev eth1 up
 ip link set dev vmbr2 up
 ```
 ```
@@ -85,6 +87,7 @@ host:
 brctl addbr vmbr3
 brctl addif vmbr3 eth2
 brctl show
+ip link set dev eth2 up
 ip link set dev vmbr3 up
 ```
 ```
@@ -122,6 +125,7 @@ host:
 brctl addbr vmbr4
 brctl addif vmbr4 eth3
 brctl show
+ip link set dev eth3 up
 ip link set dev vmbr4 up
 ```
 ```

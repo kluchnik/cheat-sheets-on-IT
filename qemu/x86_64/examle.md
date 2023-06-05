@@ -10,6 +10,7 @@ host:
 ```
 brctl addbr vmbr1
 brctl addif vmbr1 eth0
+brctl show
 ip link set dev vmbr1 up
 ```
 ```
@@ -46,6 +47,7 @@ host:
 ```
 brctl addbr vmbr2
 brctl addif vmbr2 eth1
+brctl show
 ip link set dev vmbr2 up
 ```
 ```
@@ -58,7 +60,7 @@ qemu-system-x86_64 \
   -device e1000,netdev=net1,mac=00:50:DA:82:8B:01 \
   -netdev user,id=net1,hostfwd=tcp::2202-:22 \
   -device e1000,netdev=net2,mac=00:50:DA:82:8B:02 \
-  -netdev bridge,id=net2,br=vmbr1 \
+  -netdev bridge,id=net2,br=vmbr2 \
   -display none \
   -serial telnet::4002,server,nowait \
   -daemonize \
@@ -82,6 +84,7 @@ host:
 ```
 brctl addbr vmbr3
 brctl addif vmbr3 eth2
+brctl show
 ip link set dev vmbr3 up
 ```
 ```
@@ -94,7 +97,7 @@ qemu-system-x86_64 \
   -device e1000,netdev=net1,mac=00:50:DA:82:8C:01 \
   -netdev user,id=net1,hostfwd=tcp::2203-:22 \
   -device e1000,netdev=net2,mac=00:50:DA:82:8C:02 \
-  -netdev bridge,id=net2,br=vmbr1 \
+  -netdev bridge,id=net2,br=vmbr3 \
   -display none \
   -serial telnet::4003,server,nowait \
   -daemonize \
@@ -118,6 +121,7 @@ host:
 ```
 brctl addbr vmbr4
 brctl addif vmbr4 eth3
+brctl show
 ip link set dev vmbr4 up
 ```
 ```
@@ -130,7 +134,7 @@ qemu-system-x86_64 \
   -device e1000,netdev=net1,mac=00:50:DA:82:8D:01 \
   -netdev user,id=net1,hostfwd=tcp::2204-:22 \
   -device e1000,netdev=net2,mac=00:50:DA:82:8D:02 \
-  -netdev bridge,id=net2,br=vmbr1 \
+  -netdev bridge,id=net2,br=vmbr4 \
   -display none \
   -serial telnet::4004,server,nowait \
   -daemonize \

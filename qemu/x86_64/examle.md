@@ -109,7 +109,7 @@ telnet localhost 4003
 vm:
 ```
 modprobe 8021q
-ip link add link ens4 VLAN102 type vlan id 103
+ip link add link ens4 VLAN103 type vlan id 103
 ip link set dev VLAN103 up
 ip a add 10.10.103.11/24 dev VLAN102
 ip route add 10.10.101.0/24 via 10.10.103.1
@@ -146,7 +146,7 @@ telnet localhost 4004
 vm:
 ```
 modprobe 8021q
-ip link add link ens4 VLAN102 type vlan id 104
+ip link add link ens4 VLAN104 type vlan id 104
 ip link set dev VLAN104 up
 ip a add 10.10.104.11/24 dev VLAN104
 ip route add 10.10.101.0/24 via 10.10.104.1

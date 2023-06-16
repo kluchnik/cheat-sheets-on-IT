@@ -73,6 +73,24 @@ $ iptables -t nat -A PREROUTING -d 0.0.0.0/0 -p tcp --dport 8001 -j DNAT --to-de
 $ iptables -t nat -A POSTROUTING -p tcp --dport 8443 -j MASQUERADE
 ```
 
+### Сеть: подключение VM к bridge внешней сети
+```
+$ brctl show
+$ brctl addbr vmbrNet
+
+$ ip link set dev eth1 up
+$ ip link set dev vmbrNet up
+$ brctl addif vmbrNet eth0
+$ dhclient -i vmbrNet
+```
+
+Параметры ВМ:
+```
+...
+  -device e1000,netdev=net1,mac=00:50:DA:82:8A:01 \
+  -netdev bridge,id=net1,br=vmbrNet \
+```
+
 ### Сеть: подключение VM к bridge
 ```
 $ brctl show

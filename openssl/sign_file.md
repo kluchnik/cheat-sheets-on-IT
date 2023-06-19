@@ -149,17 +149,17 @@ stateOrProvinceName_default     = Moscow
 localityName                    = Locality Name (eg, city)
 
 0.organizationName              = Organization Name (eg, company)
-0.organizationName_default      = Echelon
+0.organizationName_default      = Example
 
 # we can do this but it is not needed normally :-)
 #1.organizationName             = Second Organization Name (eg, company)
-#1.organizationName_default     = echelon
+#1.organizationName_default     = example
 
 organizationalUnitName          = Organizational Unit Name (eg, section)
 #organizationalUnitName_default =
 
 commonName                      = Common Name (e.g. server FQDN or YOUR name)
-commonName_default              = rubicon
+commonName_default              = it_system
 commonName_max                  = 64
 
 emailAddress                    = Email Address
@@ -343,6 +343,7 @@ default_tsa = tsa_config1       # the default TSA section
 # These are used by the TSA reply generation only.
 dir             = .                     # TSA root directory
 serial          = $dir/tsaserial        # The current serial number (mandatory)
+signer_digest   = sha1                  # Signing digest to use. (Optional)
 crypto_device   = builtin               # OpenSSL engine to use for signing
 signer_cert     = $dir/tsacert.pem      # The TSA signing certificate
                                              # (optional)
@@ -374,7 +375,8 @@ $ file openssl.cfg
 openssl.cfg: ASCII text
 ```
 ```
-$ openssl req -config openssl.cfg -new -x509 -keyout myca.key -out myca.crt -days 3650
+$ openssl req -config openssl.cfg -new -x509 -keyout myca.key -out myca.crt -days 365
+$ # openssl req -config ./openssl.cfg -new -x509 -keyout ./myca.key -out ./myca.crt -days 365 -passin pass:12345678 -nodes -subj "/C=RU/ST=Moscow/L=Moscow/O=local Security/OU=example/CN=example.com"
 
 Generating a 2048 bit RSA private key
 .+++
@@ -431,6 +433,7 @@ tsakey.pem: PEM RSA private key
 openssl.cfg, tsakey.pem -> tsareq.csr
 ```
 $ openssl req -config openssl.cfg -new -key tsakey.pem -out tsareq.csr
+$ # openssl req -config ./openssl.cfg -new -key ./tsakey.pem -out ./tsareq.csr -subj "/C=RU/ST=Moscow/L=Moscow/O=local Security/OU=example/CN=example.com"
 
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
